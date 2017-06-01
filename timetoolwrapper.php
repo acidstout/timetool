@@ -1,0 +1,154 @@
+<?php
+/**
+ * Simple wrapper class around the login and time logging process of TimeTool.
+ * 
+ * Usage:
+ * 
+ * 		$ttw = new TimeToolWrapper($username, $password);
+ * 
+ * 		if ($ttw) {
+ *			$ttw->printResult();
+ * 			$ttw->doTimestamp();
+ * 		}
+ * 
+ * 
+ * @author nrekow
+ *
+ */
+class TimeToolWrapper {
+
+	// Will contain the result of the request.
+	public $result        = array();
+	
+	// Credentials
+	private $username     = '';
+	private $password     = '';
+	
+	// Action which is send in the request to the server.
+	private $action       = '';
+	
+	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server. 
+	private $minTolerance = 2;
+	private $maxTolerance = 5;
+	
+	private $tt_url       = 'https://www.ttcloud.ch/cgi-bin/dhtml_appl_admin.cgi';
+
+
+	/**
+	 * 
+	 * @param string $username
+	 * @param string $password
+	 * @param integer $minTolerance
+	 * @param integer $maxTolerance
+	 * @return boolean
+	 */
+	public function __construct($username, $password, $minTolerance = null, $maxTolerance = null) {
+		if (!empty($username) && !empty($password)) {
+			$this->username = $username;
+			$this->password = $password;
+			$this->doLogin();
+			
+			if (!is_null($minTolerance) && ($minTolerance <= $this->maxTolerance || $minTolerance <= $maxTolerance)) {
+				$this->minTolerance = $minTolerance;
+			}
+			
+			if (!is_null($maxTolerance) && ($maxTolerance >= $this->minTolerance || $maxTolerance >= $minTolerance)) {
+				$this->maxTolerance = $minTolerance;
+			}
+		}
+		
+		if (!isset($result['success']) || !$result['success']) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Simple function to pretty print the server's response.
+	 */
+	public function printResult() {
+		echo '<pre>';
+		print_r($this->result);
+		echo '<pre>';
+	}
+	
+	
+	/**
+	 * Tries to log the user in to the TimeTool application using the previously defined credentials.
+	 * 
+	 * $this->result will contain the server's response (e.g. JSON).
+	 */
+	public function doLogin() {
+		$this->action = 'login';
+		
+		$params   = array(
+				'cmd' => 'login',
+				'login' => $this->username,
+				'passwd' => $this->password
+		);
+		
+		$this->result = json_decode($this->_doCurlRequest($params), true);
+	}
+	
+	
+	/**
+	 * Tries to set a calculated timestamp by sending a cURL request to the defined server.
+	 * 
+	 * $this->result will contain the server's response (e.g. JSON).
+	 */
+	public function doTimestamp() {
+		$this->action = 'addregi';
+		
+		date_default_timezone_set('Europe/Berlin');
+		$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+		
+		$params = array(
+				'cmd' => $this->action,
+				'badnum' => $this->result['badnum'],
+				'login' => $this->result['login'],
+				'tc_chef' => $this->result['login'],
+				'ucat' => 0,
+				'klkunit' => 'absent',
+				'session' => $this->result['session'],
+				'tc_session' => $this->result['session'],
+				'date' => date('Ymd'),
+				'time' => $time
+		);
+		
+		$this->result = json_decode($this->_doCurlRequest($params), true);
+	}
+	
+	
+	/**
+	 * Prepares and executes the actual cURL request using the supplied parameters. 
+	 * 
+	 * @param array $params
+	 * @return mixed
+	 */
+	private function _doCurlRequest($params) {
+		$defaults = array(
+				CURLOPT_URL => $this->tt_url,
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => http_build_query($params),
+				CURLOPT_HEADER => false,
+				CURLOPT_FRESH_CONNECT => true,
+				CURLOPT_FORBID_REUSE => true,
+				CURLOPT_CONNECTTIMEOUT => 10,
+				CURLOPT_TIMEOUT => 60,
+				CURLOPT_SSL_VERIFYPEER => false, // Not good, but required if your server does not support SSL.
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_VERBOSE => true // Debug: true, otherwise set false.
+		);
+		
+		$ch = curl_init();
+		curl_setopt_array($ch, $defaults);
+		if (!$result = curl_exec($ch)) {
+			trigger_error(curl_error($ch));
+		}
+		curl_close($ch);
+		
+		return $result;
+	}// END: curl_request()
+}
