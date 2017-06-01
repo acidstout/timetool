@@ -7,7 +7,7 @@ Usage:
 ```
 	$ttw = new TimeToolWrapper($username, $password);
 	if ($ttw) {
-	$ttw->printResult();
+		$ttw->printResult();
 		$ttw->doTimestamp();
 	}
 ```
