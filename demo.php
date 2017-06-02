@@ -37,6 +37,12 @@ if ($ttw) {
 	pre_r($ttw->getResult());
 }
 
+
+/**
+ * Pretty print an array
+ * 
+ * @param mixed $mixed
+ */
 function pre_r($mixed) {
 	echo '<pre>' . print_r($mixed, true) . '</pre>';
 }
