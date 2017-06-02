@@ -15,7 +15,7 @@ Usage:
 ```
 	$ttw = new TimeToolWrapper($username, $password);
 	if ($ttw) {
-		$ttw->printResult();
+		pre_r($ttw->getResult());
 		$ttw->doTimestamp();
 	}
 ```
