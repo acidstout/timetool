@@ -18,9 +18,9 @@
 class TimeToolWrapper {
 
 	// Will contain the result of the request.
-	public $result        = array();
+	private $result        = array();
 	
-	// Credentials
+	// Your TimeTool credentials. Leave this empty here and supply your credentials when creating a new TimeToolWrapper object.
 	private $username     = '';
 	private $password     = '';
 	
@@ -31,6 +31,7 @@ class TimeToolWrapper {
 	private $minTolerance = 2;
 	private $maxTolerance = 5;
 	
+	// The URL to the script on the TimeTool server.
 	private $tt_url       = 'https://www.ttcloud.ch/cgi-bin/dhtml_appl_admin.cgi';
 
 
@@ -68,10 +69,8 @@ class TimeToolWrapper {
 	/**
 	 * Simple function to pretty print the server's response.
 	 */
-	public function printResult() {
-		echo '<pre>';
-		print_r($this->result);
-		echo '<pre>';
+	public function getResult() {
+		return $this->result;
 	}
 	
 	

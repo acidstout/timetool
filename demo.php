@@ -10,11 +10,11 @@
  */
 require_once 'timetoolwrapper.php';
 
-// Credentials
+// Put your TimeTool credentials in here.
 $username = '<YOUR_USERNAME>';
 $password = '<YOUR_PASSWORD>';
 
-// Default request
+// Default request. This will automatically try to log you in.
 $ttw = new TimeToolWrapper($username, $password);
 
 
@@ -27,9 +27,16 @@ $ttw = new TimeToolWrapper($username, $password, $minTolerance, $maxTolerance);
 */
 
 if ($ttw) {
-	// Print result (e.g. will likely be an array)
-	$ttw->printResult();
+	// Print result of your last request (e.g. the login process).
+	pre_r($ttw->getResult());
 	
-	// Set new timestamp. Result will be empty upon success.
+	// Set new timestamp.
 	$ttw->doTimestamp();
+	
+	// Result will be empty upon success when setting a timestamp.
+	pre_r($ttw->getResult());
+}
+
+function pre_r($mixed) {
+	echo '<pre>' . print_r($mixed, true) . '</pre>';
 }
