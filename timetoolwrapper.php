@@ -18,21 +18,21 @@
 class TimeToolWrapper {
 
 	// Will contain the result of the request.
-	private $result        = array();
+	private $result = array();
 	
 	// Your TimeTool credentials. Leave this empty here and supply your credentials when creating a new TimeToolWrapper object.
-	private $username     = '';
-	private $password     = '';
+	private $username = '';
+	private $password = '';
 	
 	// Action which is send in the request to the server.
-	private $action       = '';
+	private $action = '';
 	
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server. 
 	private $minTolerance = 2;
 	private $maxTolerance = 5;
 	
 	// The URL to the script on the TimeTool server.
-	private $tt_url       = 'https://www.ttcloud.ch/cgi-bin/dhtml_appl_admin.cgi';
+	private $tt_url = 'https://www.ttcloud.ch/cgi-bin/dhtml_appl_admin.cgi';
 
 
 	/**
@@ -82,7 +82,7 @@ class TimeToolWrapper {
 	public function doLogin() {
 		$this->action = 'login';
 		
-		$params   = array(
+		$params = array(
 				'cmd' => 'login',
 				'login' => $this->username,
 				'passwd' => $this->password
