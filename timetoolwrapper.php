@@ -17,6 +17,10 @@
  */
 class TimeToolWrapper {
 
+	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
+	public $minTolerance = 2;
+	public $maxTolerance = 5;
+	
 	// Will contain the result of the request.
 	private $result = array();
 	
@@ -26,10 +30,6 @@ class TimeToolWrapper {
 	
 	// Action which is send in the request to the server.
 	private $action = '';
-	
-	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server. 
-	private $minTolerance = 2;
-	private $maxTolerance = 5;
 	
 	// The URL to the script on the TimeTool server.
 	private $tt_url = 'https://www.ttcloud.ch/cgi-bin/dhtml_appl_admin.cgi';
@@ -43,19 +43,11 @@ class TimeToolWrapper {
 	 * @param integer $maxTolerance
 	 * @return boolean
 	 */
-	public function __construct($username, $password, $minTolerance = null, $maxTolerance = null) {
+	public function __construct($username, $password) {
 		if (!empty($username) && !empty($password)) {
 			$this->username = $username;
 			$this->password = $password;
 			$this->doLogin();
-			
-			if (!is_null($minTolerance) && ($minTolerance <= $this->maxTolerance || $minTolerance <= $maxTolerance)) {
-				$this->minTolerance = $minTolerance;
-			}
-			
-			if (!is_null($maxTolerance) && ($maxTolerance >= $this->minTolerance || $maxTolerance >= $minTolerance)) {
-				$this->maxTolerance = $minTolerance;
-			}
 		}
 		
 		if (!isset($result['success']) || !$result['success']) {

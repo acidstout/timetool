@@ -5,36 +5,66 @@
  * 
  * Requires a valid account at ttcloud.ch
  * 
+ * Usage:
+ * 
+ * 		https://localhost/timetool/demo.php?user=<YOUR_USERNAME>&pass=<YOUR_PASSWORD>&min=<MIN_TOLERANCE>&max=<MAX_TOLERANCE>
+ * 
+ * GET and POST requests are accepted. Alternatively you may define your credentials and settings directly in this script. 
+ * 
  * @author nrekow
  * 
  */
+
 require_once 'timetoolwrapper.php';
 
-// Put your TimeTool credentials in here.
+// Default credentials. Put your TimeTool credentials in here.
 $username = '<YOUR_USERNAME>';
 $password = '<YOUR_PASSWORD>';
 
-// Default request. This will automatically try to log you in.
-$ttw = new TimeToolWrapper($username, $password);
-
-
-// Optionally include tolerance in minutes.
-/*
+// Default tolerance in minutes.
 $minTolerance = 4;
 $maxTolerance = 6;
 
-$ttw = new TimeToolWrapper($username, $password, $minTolerance, $maxTolerance);
-*/
+
+// No need to escape this here, because the external application takes care of that.
+if (isset($_REQUEST['user']) && !empty($_REQUEST['user'])) {
+	$username = $_REQUEST['user'];
+}
+if (isset($_REQUEST['pass']) && !empty($_REQUEST['pass'])) {
+	$password = $_REQUEST['pass'];
+}
+
+
+// Create and initialize new TimeTool object. Will try to log you in with the supplied credentials.
+$ttw = new TimeToolWrapper($username, $password);
 
 if ($ttw) {
-	// Print result of your last request (e.g. the login process).
-	pre_r($ttw->getResult());
+	// Check for custom tolerance settings.
+	if (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && ($_REQUEST['min'] <= $ttw->maxTolerance || (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && $_REQUEST['min'] <= $_REQUEST['max']))) {
+		$ttw->minTolerance = $_REQUEST['min'];
+	}
+	if (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && ($_REQUEST['max'] >= $ttw->minTolerance || (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && $_REQUEST['max'] >= $_REQUEST['min']))) {
+		$ttw->maxTolerance = $_REQUEST['max'];
+	}
 	
-	// Set new timestamp.
-	$ttw->doTimestamp();
+	$result = $ttw->getResult();
 	
-	// Result will be empty upon success when setting a timestamp.
-	pre_r($ttw->getResult());
+	// Contains a human readable representation of the returned error code.
+	echo $result['error'];
+	
+	// Check result of initialization
+	if (isset($result['success']) && $result['success']) {
+		// Set new timestamp. Arrive and leave action is set automatically by the application on the server.
+		$ttw->doTimestamp();
+		$result = $ttw->getResult();
+		
+		// Check result. Will be empty on success.
+		if (count($result) == 0) {
+			echo '<br/>Ok.';
+		} else {
+			pre_r($result);
+		}
+	}
 }
 
 
