@@ -18,7 +18,7 @@
 class TimeToolWrapper {
 
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
-	public $minTolerance = 2;
+	public $minTolerance = 3;
 	public $maxTolerance = 5;
 	
 	// Will contain the result of the request.
@@ -39,8 +39,6 @@ class TimeToolWrapper {
 	 * 
 	 * @param string $username
 	 * @param string $password
-	 * @param integer $minTolerance
-	 * @param integer $maxTolerance
 	 * @return boolean
 	 */
 	public function __construct($username, $password) {

@@ -21,7 +21,7 @@ require_once 'timetoolwrapper.php';
 $username = '<YOUR_USERNAME>';
 $password = '<YOUR_PASSWORD>';
 
-// Default tolerance in minutes.
+// Default tolerance in minutes. Overwrites preset in class.
 $minTolerance = 4;
 $maxTolerance = 6;
 
@@ -39,12 +39,16 @@ if (isset($_REQUEST['pass']) && !empty($_REQUEST['pass'])) {
 $ttw = new TimeToolWrapper($username, $password);
 
 if ($ttw) {
-	// Check for custom tolerance settings.
+	// Check for custom tolerance settings. $_REQUEST overwrites preset in class and in this file.
 	if (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && ($_REQUEST['min'] <= $ttw->maxTolerance || (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && $_REQUEST['min'] <= $_REQUEST['max']))) {
 		$ttw->minTolerance = $_REQUEST['min'];
+	} else if (isset($minTolerance) && is_numeric($minTolerance)) {
+		$ttw->minTolerance = $minTolerance;
 	}
 	if (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && ($_REQUEST['max'] >= $ttw->minTolerance || (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && $_REQUEST['max'] >= $_REQUEST['min']))) {
 		$ttw->maxTolerance = $_REQUEST['max'];
+	} else if (isset($maxTolerance) && is_numeric($maxTolerance)) {
+		$ttw->maxTolerance = $maxTolerance;
 	}
 	
 	$result = $ttw->getResult();
