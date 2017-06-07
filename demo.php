@@ -32,7 +32,7 @@ $maxTolerance = 6;
 
 
 // Include required TimeToolWrapper class.
-require_once 'timetoolwrapper.php';
+require_once 'classes/timetool/wrapper.php';
 
 // No need to escape this here, because the external application takes care of that.
 if (isset($_REQUEST['user']) && !empty($_REQUEST['user'])) {
@@ -48,7 +48,7 @@ if (empty($username) || empty($password)) {
 }
 
 // Create and initialize new TimeTool object. Will try to log you in with the supplied credentials.
-$ttw = new TimeToolWrapper($username, $password);
+$ttw = new TimeTool\Wrapper($username, $password);
 
 if ($ttw) {
 	// Check for custom tolerance settings. $_REQUEST overwrites preset in class and in this file.

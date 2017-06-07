@@ -15,7 +15,10 @@
  * @author nrekow
  *
  */
-class TimeToolWrapper {
+
+namespace TimeTool;
+
+class Wrapper {
 
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
 	public $minTolerance = 3;
