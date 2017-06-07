@@ -1,0 +1,91 @@
+html, body {
+	margin:0;
+	padding:0;
+	border:0 none;
+	color:#555;
+	line-height:inherit;
+}
+
+button {
+	border:1px solid #eee;
+	box-shadow: 1px 1px 2px #aaa;
+	background-color: #f4f4f4;
+	cursor:pointer;
+	text-shadow: 0 0.1em 0.2em #eee;
+	color:#555;
+}
+
+h2 {
+	font-family: "Verdana", "Helvetica", sans-serif;
+	line-height:6pt;
+}
+
+input[type=text], input[type=password] {
+	border:0 none;
+	border-bottom:1px solid #ccc;
+	background-color: transparent;
+	color:#555;
+	font-family: "Verdana", "Helvetica", sans-serif;
+	font-size:9pt;
+	text-shadow: 0 0.1em 0.2em #eee;
+}
+
+/* Set color of placeholder */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #ccc;
+	opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #ccc;
+	opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #ccc;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+	color: #ccc;
+}
+
+.fixed-center {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: auto;
+	height: auto;
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+}
+
+.fixed-horizontal-center {
+	position: fixed;
+	top: 100px; /* or whatever top you need */
+	left: 50%;
+	width: auto;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+#login {
+	background-color:#fff;
+	padding:2em;
+	box-shadow: 0 0 4em #ccc;
+	border:0.1em solid #eaeaea;
+}
+
+#result {
+	font-family: "Verdana", "Helvetica", sans-serif;
+	font-size: 9pt;
+	text-align:center;
+	position:relative;
+	top:10px;
+	height:1em;
+}
