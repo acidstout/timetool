@@ -9,22 +9,30 @@
  * 
  * 		https://localhost/timetool/demo.php?user=<YOUR_USERNAME>&pass=<YOUR_PASSWORD>&min=<MIN_TOLERANCE>&max=<MAX_TOLERANCE>
  * 
- * GET and POST requests are accepted. Alternatively you may define your credentials and settings directly in this script. 
+ * GET and POST requests are accepted. Alternatively you may define your credentials and settings directly in this script.
+ * 
+ * Using GET requests to supply your credentials is a bad idea if you are using a public or shared computer.
  * 
  * @author nrekow
  * 
  */
 
-require_once 'timetoolwrapper.php';
-
 // Default credentials. Put your TimeTool credentials in here.
-$username = '<YOUR_USERNAME>';
-$password = '<YOUR_PASSWORD>';
+$username = '';
+$password = '';
 
 // Default tolerance in minutes. Overwrites preset in class.
 $minTolerance = 4;
 $maxTolerance = 6;
 
+//
+// Setup done. Don't change anything below unless you're a developer and know what you're doing.
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Include required TimeToolWrapper class.
+require_once 'timetoolwrapper.php';
 
 // No need to escape this here, because the external application takes care of that.
 if (isset($_REQUEST['user']) && !empty($_REQUEST['user'])) {
@@ -34,6 +42,10 @@ if (isset($_REQUEST['pass']) && !empty($_REQUEST['pass'])) {
 	$password = $_REQUEST['pass'];
 }
 
+if (empty($username) || empty($password)) {
+	askForCredentials();
+	die();
+}
 
 // Create and initialize new TimeTool object. Will try to log you in with the supplied credentials.
 $ttw = new TimeToolWrapper($username, $password);
@@ -51,9 +63,8 @@ if ($ttw) {
 		$ttw->maxTolerance = $maxTolerance;
 	}
 	
-	$result = $ttw->getResult();
-	
 	// Contains a human readable representation of the returned error code.
+	$result = $ttw->getResult();
 	echo $result['error'];
 	
 	// Check result of initialization
@@ -64,13 +75,15 @@ if ($ttw) {
 		
 		// Check result. Will be empty on success.
 		if (count($result) == 0) {
-			echo '<br/>Ok.';
+			echo 'Ok.';
 		} else {
 			pre_r($result);
 		}
 	}
 }
 
+// Always die after main routine.
+die();
 
 /**
  * Pretty print an array
@@ -79,4 +92,12 @@ if ($ttw) {
  */
 function pre_r($mixed) {
 	echo '<pre>' . print_r($mixed, true) . '</pre>';
+}
+
+
+/**
+ * Load HTML template 
+ */
+function askForCredentials() {
+	require_once 'demo.html';
 }
