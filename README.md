@@ -13,7 +13,7 @@ But if you set a large tolerance range and/or modify the code to *add* time when
 
 Usage:
 ```
-	$ttw = new TimeToolWrapper($username, $password);
+	$ttw = new TimeTool\Wrapper($username, $password);
 	if ($ttw) {
 		pre_r($ttw->getResult());
 		$ttw->doTimestamp();

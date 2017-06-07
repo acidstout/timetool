@@ -4,7 +4,7 @@
  * 
  * Usage:
  * 
- * 		$ttw = new TimeToolWrapper($username, $password);
+ * 		$ttw = new TimeTool\Wrapper($username, $password);
  * 
  * 		if ($ttw) {
  *			pre_r($ttw->getResult());
