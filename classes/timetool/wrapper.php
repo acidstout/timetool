@@ -120,6 +120,7 @@ class Wrapper {
 	 * @return mixed
 	 */
 	private function _doCurlRequest($params) {
+		// These are our default options for our cURL request. 
 		$defaults = array(
 				CURLOPT_URL => $this->tt_url,
 				CURLOPT_POST => true,
@@ -134,11 +135,19 @@ class Wrapper {
 				CURLOPT_VERBOSE => true // Debug: true, otherwise set false.
 		);
 		
+		// Init our cURL session.
 		$ch = curl_init();
+
+		// Set cURL options as defined above.
 		curl_setopt_array($ch, $defaults);
+		
+		// Do the cURL request ...
 		if (!$result = curl_exec($ch)) {
-			trigger_error(curl_error($ch));
+			// ... and display its result.
+			echo curl_error($ch);
 		}
+		
+		// Close our cURL session
 		curl_close($ch);
 		
 		return $result;
