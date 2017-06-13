@@ -92,9 +92,15 @@ class Wrapper {
 	 */
 	public function doTimestamp() {
 		$this->action = 'addregi';
-		
+
 		date_default_timezone_set('Europe/Berlin');
-		$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+		
+		$time = date('H:i');
+
+		// Only use tolerance if it's greater than zero.
+		if (!empty($this->minTolerance) && !empty($this->maxTolerance)) {
+			$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+		}
 		
 		$params = array(
 				'cmd' => $this->action,
