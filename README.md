@@ -9,9 +9,12 @@ As the TimeTool relies on the clients clock, I noticed some issue while trying t
 
 The tolerance range should be very small in order to still have proper results. I guess, no one will care if you log in 2-3 minutes earlier than you actually arrive, because the same applies to when you leave (e.g. then 2-3 minutes will be substracted from the current time).
 
-But if you set a large tolerance range and/or modify the code to *add* time when you leave, you'll likely get into trouble with your boss. ;) Just keep that in mind.
+But if you set a large tolerance range, you'll likely get into trouble with your boss. ;) Just keep that in mind.
 
-Usage:
+## Usage
+
+Set your defaults in config.php file and then use the following:
+
 ```
 	$ttw = new TimeTool\Wrapper($username, $password);
 	if ($ttw) {
