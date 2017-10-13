@@ -103,5 +103,5 @@ function pre_r($mixed) {
  * Load HTML template 
  */
 function askForCredentials($username, $password) {
-	require_once 'template.php';
+	require_once 'index.php';
 }
