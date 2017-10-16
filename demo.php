@@ -17,38 +17,41 @@
  * 
  */
 
-// Default credentials. Put your TimeTool credentials in here.
-$username = '';
-$password = '';
 
-// Default tolerance in minutes. Overwrites preset in class.
-$minTolerance = 4;
-$maxTolerance = 6;
-
-//
-// Setup done. Don't change anything below unless you're a developer and know what you're doing.
-//
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//
+// Include configuration file
+if (file_exists('config.php')) {
+	include_once 'config.php';
+}
 
 // Include required TimeToolWrapper class.
-require_once 'timetoolwrapper.php';
+require_once 'classes/timetool/wrapper.php';
 
-// No need to escape this here, because the external application takes care of that.
+// Escape inputs just for the sake of good order.
+// Check for username ...
 if (isset($_REQUEST['user']) && !empty($_REQUEST['user'])) {
-	$username = $_REQUEST['user'];
+	$username = htmlentities($_REQUEST['user'], ENT_QUOTES);
+} else if (!isset($username)) {
+	// ... and default to empty username.
+	$username = '';
 }
+// Check password ...
 if (isset($_REQUEST['pass']) && !empty($_REQUEST['pass'])) {
-	$password = $_REQUEST['pass'];
+	$password = htmlentities($_REQUEST['pass'], ENT_QUOTES);
+} else if (!isset($password)) {
+	// ... and default to empty password.
+	$password = '';
 }
 
+// Ask for credentials if at least one setting is empty and insert the one that's filled into the form. 
 if (empty($username) || empty($password)) {
-	askForCredentials();
+	askForCredentials($username, $password);
 	die();
 }
 
 // Create and initialize new TimeTool object. Will try to log you in with the supplied credentials.
-$ttw = new TimeToolWrapper($username, $password);
+$ttw = new TimeTool\Wrapper(html_entity_decode($username, ENT_QUOTES), html_entity_decode($password, ENT_QUOTES));
 
 if ($ttw) {
 	// Check for custom tolerance settings. $_REQUEST overwrites preset in class and in this file.
@@ -85,6 +88,7 @@ if ($ttw) {
 // Always die after main routine.
 die();
 
+
 /**
  * Pretty print an array
  * 
@@ -98,6 +102,6 @@ function pre_r($mixed) {
 /**
  * Load HTML template 
  */
-function askForCredentials() {
-	require_once 'demo.html';
+function askForCredentials($username, $password) {
+	require_once 'index.php';
 }

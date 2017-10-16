@@ -7,12 +7,12 @@ html, body {
 }
 
 button {
-	border:1px solid #eee;
-	box-shadow: 1px 1px 2px #aaa;
-	background-color: #f4f4f4;
+	border:1px solid #f5f5f5;
+	box-shadow: 1px 1px 2px #ccc;
+	background-color: #fafafa;
 	cursor:pointer;
 	text-shadow: 0 0.1em 0.2em #eee;
-	color:#555;
+	color:#888;
 }
 
 h2 {

@@ -4,7 +4,7 @@
  * 
  * Usage:
  * 
- * 		$ttw = new TimeToolWrapper($username, $password);
+ * 		$ttw = new TimeTool\Wrapper($username, $password);
  * 
  * 		if ($ttw) {
  *			pre_r($ttw->getResult());
@@ -15,7 +15,10 @@
  * @author nrekow
  *
  */
-class TimeToolWrapper {
+
+namespace TimeTool;
+
+class Wrapper {
 
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
 	public $minTolerance = 3;
@@ -89,9 +92,15 @@ class TimeToolWrapper {
 	 */
 	public function doTimestamp() {
 		$this->action = 'addregi';
-		
+
 		date_default_timezone_set('Europe/Berlin');
-		$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+		
+		$time = date('H:i');
+
+		// Only use tolerance if it's greater than zero.
+		if (!empty($this->minTolerance) && !empty($this->maxTolerance)) {
+			$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+		}
 		
 		$params = array(
 				'cmd' => $this->action,
@@ -117,6 +126,7 @@ class TimeToolWrapper {
 	 * @return mixed
 	 */
 	private function _doCurlRequest($params) {
+		// These are our default options for our cURL request. 
 		$defaults = array(
 				CURLOPT_URL => $this->tt_url,
 				CURLOPT_POST => true,
@@ -131,11 +141,19 @@ class TimeToolWrapper {
 				CURLOPT_VERBOSE => true // Debug: true, otherwise set false.
 		);
 		
+		// Init our cURL session.
 		$ch = curl_init();
+
+		// Set cURL options as defined above.
 		curl_setopt_array($ch, $defaults);
+		
+		// Do the cURL request ...
 		if (!$result = curl_exec($ch)) {
-			trigger_error(curl_error($ch));
+			// ... and display its result.
+			echo curl_error($ch);
 		}
+		
+		// Close our cURL session
 		curl_close($ch);
 		
 		return $result;
