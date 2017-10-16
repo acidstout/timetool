@@ -14,8 +14,8 @@
 				<form action="#" method="post" autocomplete="off">
 					<input type="password" style="display:none;" name="disable-autocomplete-1" value="disable-autocomplete-1"/>
 					<input type="password" style="display:none;" name="disable-autocomplete-2" value="disable-autocomplete-2"/>
-					<input type="text" id="user" required value="<?php if (isset($username)) { echo $username; }?>" autocomplete="off" placeholder="Username"/>
-					&nbsp;<input type="password" id="pass" required value="<?php if (isset($password)) { echo $password; }?>" autocomplete="off" placeholder="Password"/>
+					<input type="text" id="user" required value="<?php echo isset($username) ? $username : null;?>" autocomplete="off" placeholder="Username"/>
+					&nbsp;<input type="password" id="pass" required value="<?php echo isset($password) ? $password : null;?>" autocomplete="off" placeholder="Password"/>
 					&nbsp;<button type="button" id="submit">Login</button>
 				</form>
 				<div id="result"></div>

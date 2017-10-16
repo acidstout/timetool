@@ -32,7 +32,7 @@ require_once 'classes/timetool/wrapper.php';
 // Check for username ...
 if (isset($_REQUEST['user']) && !empty($_REQUEST['user'])) {
 	$username = htmlentities($_REQUEST['user'], ENT_QUOTES);
-} else  if (!isset($username)) {
+} else if (!isset($username)) {
 	// ... and default to empty username.
 	$username = '';
 }
