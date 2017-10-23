@@ -8,4 +8,4 @@ $password = '';
 //$maxTolerance = 6;
 
 // Disable tolerance option by default
-define('DEBUG', false);
+define('TOLERANCE', false);

@@ -5,9 +5,9 @@ Authenticate against the TimeTool server (www.ttcloud.ch) and use the current ti
 
 Requires a valid TimeTool account.
 
-As the TimeTool relies on the clients clock, I noticed some issue while trying to use the current time. If both clocks (the client's one and the one of the server) are not 100% synchronized, you will get an error message as reply from the server, stating that you cannot arrive/leave with a future timestamp. So, I set up a tolerance range, which picks a random number und substracts it from the minutes of the current time. This will result in an timestamp which is always valid.
+As TimeTool relies on the client's clock, I noticed some issue while trying to use the current time. If both clocks (the client's one and the one of the server) are not 100% synchronized, you'll get an error message as reply from the server, stating that you cannot arrive/leave with a future timestamp. So, I set up a tolerance range, which picks a random number und substracts it from the minutes of the current time. This will result in a timestamp which is always valid.
 
-The tolerance range should be very small in order to still have proper results. I guess, no one will care if you log in 2-3 minutes earlier than you actually arrive, because the same applies to when you leave (e.g. then 2-3 minutes will be substracted from the current time).
+The tolerance range should be very small in order to still have proper results. I guess, no one will care if you log in 2-3 minutes earlier than you actually arrive, because the same applies when you leave (e.g. 2-3 minutes will be substracted from the current time). By default the tolerance range is disabled. If you wish to use it, you may enable it in the config.php file. I recommend to synchronize clocks instead. 
 
 But if you set a large tolerance range, you'll likely get into trouble with your boss. ;) Just keep that in mind.
 
