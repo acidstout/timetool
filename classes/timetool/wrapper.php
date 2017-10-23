@@ -98,7 +98,7 @@ class Wrapper {
 		$time = date('H:i');
 
 		// Only use tolerance if it's greater than zero.
-		if (!empty($this->minTolerance) && !empty($this->maxTolerance)) {
+		if (DEBUG === true && !empty($this->minTolerance) && !empty($this->maxTolerance)) {
 			$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
 		}
 		
