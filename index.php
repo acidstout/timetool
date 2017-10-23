@@ -4,7 +4,7 @@
 		<meta charset="UTF-8"/>
 		<title>TimeToolWrapper class demo</title>
 		<link rel="stylesheet" href="css/demo.css"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script>
+		<script src="js/jquery.min.js" defer></script>
 		<script src="js/demo.js" defer></script>
 	</head>
 	<body>

@@ -78,7 +78,7 @@ if ($ttw) {
 		
 		// Check result. Will be empty on success.
 		if (count($result) == 0) {
-			echo 'Ok.';
+			echo ' Zeitstempel gesetzt.';
 		} else {
 			pre_r($result);
 		}
