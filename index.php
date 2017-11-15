@@ -18,7 +18,10 @@
 					&nbsp;<input type="password" id="pass" required value="" autocomplete="off" placeholder="Passwort"/>
 					&nbsp;<button type="button" id="submit">Generieren</button>
 				</form>
-				<div id="result"><?php global $expired; echo (isset($expired) && $expired) ? 'Ihr Token ist abgelaufen.' : null;?></div>
+				<div id="result"><?php
+					global $expired;
+					echo (isset($expired) && $expired) ? 'Ihr Token ist abgelaufen.' : null;
+				?></div>
 			</div>
 		</div>
 	</body>
