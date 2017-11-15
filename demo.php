@@ -40,6 +40,7 @@ require_once 'classes/xorcrypt/class.xor.php';
 use TimeTool\Wrapper;
 use XORcrypt\XORcrypt;
 
+$expired = false;
 
 // Escape inputs just for the sake of good order.
 // Check for username ...
@@ -74,12 +75,13 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 		$timestamp = strtotime($timestamp);
 		
 		if ($expires < $timestamp) {
-			askForCredentials($username, $password, true);
+			$expired = true;
+			askForCredentials();
 			die();
 		}
 	}
 } else if (!empty($username) && !empty($password)) {
-	$time = new DateTime('now +2 months');
+	$time = new DateTime('now -2 months');
 	$timestamp = $time->format('YmdHis');
 	$token = new XORcrypt(array('user' => $username, 'pass' => $password, 'expires' => strtotime($timestamp)), KEY);
 	$token = $token->encrypt();
@@ -92,7 +94,7 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 
 // Ask for credentials if at least one setting is empty and insert the one that's filled into the form.
 if (empty($username) || empty($password)) {
-	askForCredentials($username, $password);
+	askForCredentials();
 	die();
 }
 
@@ -143,6 +145,6 @@ function pre_r($mixed) {
  * @param string $username
  * @param string $password
  */
-function askForCredentials($username, $password, $expired = false) {
+function askForCredentials() {
 	require_once 'index.php';
 }

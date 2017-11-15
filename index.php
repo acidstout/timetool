@@ -14,11 +14,11 @@
 				<form action="#" method="post" autocomplete="off">
 					<input type="password" style="display:none;" name="disable-autocomplete-1" value="disable-autocomplete-1"/>
 					<input type="password" style="display:none;" name="disable-autocomplete-2" value="disable-autocomplete-2"/>
-					<input type="text" id="user" required value="<?php echo isset($username) ? $username : null;?>" autocomplete="off" placeholder="Benutzername"/>
-					&nbsp;<input type="password" id="pass" required value="<?php echo isset($password) ? $password : null;?>" autocomplete="off" placeholder="Passwort"/>
+					<input type="text" id="user" required value="" autocomplete="off" placeholder="Benutzername"/>
+					&nbsp;<input type="password" id="pass" required value="" autocomplete="off" placeholder="Passwort"/>
 					&nbsp;<button type="button" id="submit">Generieren</button>
 				</form>
-				<div id="result"><?php echo (isset($expired) && $expired) ? 'Ihr Token ist abgelaufen.' : null;?></div>
+				<div id="result"><?php global $expired; echo (isset($expired) && $expired) ? 'Ihr Token ist abgelaufen.' : null;?></div>
 			</div>
 		</div>
 	</body>

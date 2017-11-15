@@ -7,4 +7,4 @@ define('MINTOLERANCE', 2);
 define('MAXTOLERANCE', 2);
 
 // Secret key to encrypt credentials.
-define('KEY', '');
+define('KEY', 'secret');
