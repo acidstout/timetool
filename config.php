@@ -3,8 +3,8 @@
 define('TOLERANCE', true);
 
 // Optionally set tolerance in minutes. Overwrites preset in class.
-define('minTolerance', 2);
-define('maxTolerance', 2);
+define('MINTOLERANCE', 2);
+define('MAXTOLERANCE', 2);
 
 // Secret key to encrypt credentials.
 define('KEY', '');
