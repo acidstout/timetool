@@ -4,7 +4,7 @@
  * 
  * Usage:
  * 
- * 		use TimeTool\Wrapper
+ * 		use TimeTool\Wrapper;
  * 		$ttw = new Wrapper($username, $password);
  * 
  * 		if ($ttw) {

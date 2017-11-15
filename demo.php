@@ -1,28 +1,28 @@
 <?php
 /**
- * 
+ *
  * Demo of the TimeToolWrapper class.
- * 
+ *
  * Requires a valid account at ttcloud.ch
- * 
+ *
  * Usage:
- * 
+ *
  * 		1) Set secret key in config.php before trying to generate tokens.
- * 
+ *
  * 		2) Generate a token (which is valid for two months) by calling
- * 		
+ *
  * 			https://localhost/timetool/
- * 
+ *
  * 		   Enter your credentials when prompted and click generate. A token will be generated and displayed.
- * 
+ *
  * 		3) Login using the generated token by calling
  *
  * 			https://localhost/timetool/demo.php?token=<YOUR_TOKEN>
- * 
+ *
  * GET and POST requests are accepted. Alternatively you may define your credentials and settings directly in the configuration file.
- * 
+ *
  * @author nrekow
- * 
+ *
  */
 
 
@@ -90,7 +90,7 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 }
 
 
-// Ask for credentials if at least one setting is empty and insert the one that's filled into the form. 
+// Ask for credentials if at least one setting is empty and insert the one that's filled into the form.
 if (empty($username) || empty($password)) {
 	askForCredentials($username, $password);
 	die();
@@ -128,7 +128,7 @@ die();
 
 /**
  * Pretty print an array
- * 
+ *
  * @param mixed $mixed
  * @return string
  */
@@ -139,9 +139,9 @@ function pre_r($mixed) {
 
 /**
  * Load HTML template
- * 
+ *
  * @param string $username
- * @param string $password 
+ * @param string $password
  */
 function askForCredentials($username, $password, $expired = false) {
 	require_once 'index.php';
