@@ -30,6 +30,10 @@ input[type=text], input[type=password] {
 	text-shadow: 0 0.1em 0.2em #eee;
 }
 
+input#token {
+	width:70%;
+}
+
 /* Set color of placeholder */
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 	color: #ccc;

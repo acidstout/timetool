@@ -4,11 +4,13 @@
  * 
  * Usage:
  * 
- * 		$ttw = new TimeTool\Wrapper($username, $password);
+ * 		use TimeTool\Wrapper;
+ * 		$ttw = new Wrapper($username, $password);
  * 
  * 		if ($ttw) {
- *			pre_r($ttw->getResult());
+ *			echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
  * 			$ttw->doTimestamp();
+ *			echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
  * 		}
  * 
  * 
@@ -19,10 +21,9 @@
 namespace TimeTool;
 
 class Wrapper {
-
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
-	public $minTolerance = 3;
-	public $maxTolerance = 5;
+	private $minTolerance = 2;
+	private $maxTolerance = 2;
 	
 	// Will contain the result of the request.
 	private $result = array();
@@ -39,6 +40,7 @@ class Wrapper {
 
 
 	/**
+	 * Constructor
 	 * 
 	 * @param string $username
 	 * @param string $password
@@ -73,14 +75,17 @@ class Wrapper {
 	 * $this->result will contain the server's response (e.g. JSON).
 	 */
 	public function doLogin() {
+		// Action as expected by the TimeTool API.
 		$this->action = 'login';
 		
+		// Prepare parameters which will be posted to the TimeTool API.
 		$params = array(
 				'cmd' => 'login',
 				'login' => $this->username,
 				'passwd' => $this->password
 		);
 		
+		// Do the actual POST.
 		$this->result = json_decode($this->_doCurlRequest($params), true);
 	}
 	
@@ -91,17 +96,31 @@ class Wrapper {
 	 * $this->result will contain the server's response (e.g. JSON).
 	 */
 	public function doTimestamp() {
-		$this->action = 'addregi';
-
+		// Set default timezone.
 		date_default_timezone_set('Europe/Berlin');
 		
+		// Get current time.
 		$time = date('H:i');
-
-		// Only use tolerance if it's greater than zero.
-		if (TOLERANCE === true && !empty($this->minTolerance) && !empty($this->maxTolerance)) {
-			$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
-		}
 		
+		// Action as expected by the TimeTool API.
+		$this->action = 'addregi';
+		
+		// Check for custom tolerance settings.
+		if (TOLERANCE === true) {
+			if (is_numeric(minTolerance)) {
+				$this->minTolerance = MINTOLERANCE;
+			}
+			if (is_numeric(maxTolerance)) {
+				$this->maxTolerance = MAXTOLERANCE;
+			}
+			
+			// Only use tolerance if it's greater than zero.
+			if (!empty($this->minTolerance) && !empty($this->maxTolerance)) {
+				$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+			}
+		}		
+
+		// Prepare parameters which will be posted to the TimeTool API.
 		$params = array(
 				'cmd' => $this->action,
 				'badnum' => $this->result['badnum'],
@@ -115,7 +134,11 @@ class Wrapper {
 				'time' => $time
 		);
 		
+		// Do the actual POST.
 		$this->result = json_decode($this->_doCurlRequest($params), true);
+		
+		// Return the set timestamp to the user.
+		return $time;
 	}
 	
 	

@@ -1,11 +1,10 @@
 <?php
-// Default credentials. Put your TimeTool credentials in here.
-$username = '';
-$password = '';
+// Disable tolerance option by default.
+define('TOLERANCE', true);
 
 // Optionally set tolerance in minutes. Overwrites preset in class.
-//$minTolerance = 4;
-//$maxTolerance = 6;
+define('MINTOLERANCE', 2);
+define('MAXTOLERANCE', 2);
 
-// Disable tolerance option by default
-define('TOLERANCE', false);
+// Secret key to encrypt credentials.
+define('KEY', 'secret');
