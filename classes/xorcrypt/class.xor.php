@@ -58,6 +58,7 @@ class XORcrypt {
 			return false;
 		}
 		
+		$this->_data = urldecode($this->_data);
 		$this->_data = base64_decode($this->_data);
 		$this->_data = $this->_xor($this->_data);
 		$this->_data = json_decode($this->_data, true);
@@ -80,6 +81,7 @@ class XORcrypt {
 		$json = json_encode($this->_data);
 		$this->_data = $this->_xor($json);
 		$this->_data = base64_encode($this->_data);
+		$this->_data = urlencode($this->_data);
 		
 		return $this->_data;
 	}

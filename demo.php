@@ -19,10 +19,6 @@
  *
  * 			https://localhost/timetool/demo.php?token=<YOUR_TOKEN>
  * 
- * 		4) Optionally append min/max parameters to define a custom tolerance setting (if enabled):
- *  
- * 			https://localhost/timetool/demo.php?token=<YOUR_TOKEN>&min=<MIN_TOLERANCE>&max=<MAX_TOLERANCE>
- * 
  * GET and POST requests are accepted. Alternatively you may define your credentials and settings directly in the configuration file.
  * 
  * @author nrekow
@@ -106,18 +102,6 @@ if (empty($username) || empty($password)) {
 $ttw = new Wrapper(html_entity_decode($username, ENT_QUOTES), html_entity_decode($password, ENT_QUOTES));
 
 if ($ttw) {
-	// Check for custom tolerance settings. $_REQUEST overwrites preset in class and in this file.
-	if (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && ($_REQUEST['min'] <= $ttw->maxTolerance || (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && $_REQUEST['min'] <= $_REQUEST['max']))) {
-		$ttw->minTolerance = $_REQUEST['min'];
-	} else if (defined(minTolerance) && is_numeric(minTolerance)) {
-		$ttw->minTolerance = minTolerance;
-	}
-	if (isset($_REQUEST['max']) && is_numeric($_REQUEST['max']) && ($_REQUEST['max'] >= $ttw->minTolerance || (isset($_REQUEST['min']) && is_numeric($_REQUEST['min']) && $_REQUEST['max'] >= $_REQUEST['min']))) {
-		$ttw->maxTolerance = $_REQUEST['max'];
-	} else if (defined(maxTolerance) && is_numeric(maxTolerance)) {
-		$ttw->maxTolerance = maxTolerance;
-	}
-	
 	// Contains a human readable representation of the returned error code.
 	$result = $ttw->getResult();
 	echo $result['error'];
