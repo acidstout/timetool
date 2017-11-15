@@ -21,8 +21,8 @@ namespace TimeTool;
 class Wrapper {
 
 	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
-	public $minTolerance = 3;
-	public $maxTolerance = 5;
+	public $minTolerance = 1;
+	public $maxTolerance = 2;
 	
 	// Will contain the result of the request.
 	private $result = array();
@@ -116,6 +116,8 @@ class Wrapper {
 		);
 		
 		$this->result = json_decode($this->_doCurlRequest($params), true);
+		
+		return $time;
 	}
 	
 	
