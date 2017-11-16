@@ -10,4 +10,4 @@ define('MAXTOLERANCE', 2);
 define('KEY', 'secret');
 
 // Lifetime of generated token.
-define('LIFETIME', 'now -2 months');
+define('LIFETIME', 'now +2 months');

@@ -8,7 +8,7 @@ $(function() {
 			
 			$.ajax({
 				type: 'post',
-				url: 'demo.php',
+				url: 'index.php',
 				data: data,
 				success: function(result) {
 					$('#result').html(result);

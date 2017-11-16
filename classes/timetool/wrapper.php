@@ -21,7 +21,8 @@
 namespace TimeTool;
 
 class Wrapper {
-	// Default range of tolerance in minutes. A random value will be substracted from the time prior posting it to the server.
+	// Default tolerance settings. A random value between min/max tolerance will be substracted from the time prior posting it to the server.
+	private $useTolerance = true;
 	private $minTolerance = 2;
 	private $maxTolerance = 2;
 	
@@ -51,6 +52,18 @@ class Wrapper {
 			$this->username = $username;
 			$this->password = $password;
 			$this->doLogin();
+		}
+		
+		if (!defined('TOLERANCE')) {
+			define('TOLERANCE', $this->useTolerance);
+		}
+		
+		if (!defined('MINTOLERANCE')) {
+			define('MINTOLERANCE', $this->minTolerance);
+		}
+
+		if (!defined('MAXTOLERANCE')) {
+			define('MAXTOLERANCE', $this->maxTolerance);
 		}
 		
 		if (!isset($result['success']) || !$result['success']) {
