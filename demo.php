@@ -50,8 +50,11 @@ $demokey = false;
 
 
 // Check if proper secret key has been defined.
-if (!defined('KEY') || KEY == 'secret') {
+if (!defined('KEY')) {
 	define('KEY', 'secret');
+	$demokey = true;
+}
+if (KEY == 'secret') {
 	$demokey = true;
 }
 
