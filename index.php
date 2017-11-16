@@ -119,7 +119,9 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 	$timestamp = $time->format('YmdHis');
 	$token = new XORcrypt(array('user' => $username, 'pass' => $password, 'expires' => strtotime($timestamp)), KEY);
 	$token = $token->encrypt();
-	echo 'Ihr Token lautet <input id="token" type="text" readonly value="' . $token . '" onclick="this.select();"/>';
+	//echo 'Ihr Token lautet <input id="token" type="text" readonly value="' . $token . '" onclick="this.select();"/><br/>';
+	echo '<button type="button" onclick="copyTextToClipboard(\'' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['PHP_SELF'] . '?token=' . $token . '\');">Link mit generierten Token in die Zwischenablage kopieren</button>';
+	error_log(print_r($_SERVER, true), 0);
 	die();
 }
 
@@ -186,7 +188,7 @@ function askForCredentials($expired, $demokey) {?>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>TimeToolWrapper class demo</title>
+		<title>TimeTool Wrapper</title>
 		<link rel="stylesheet" href="css/style.css"/>
 		<script src="js/jquery.min.js" defer></script>
 		<script src="js/ajax.js" defer></script>

@@ -91,5 +91,22 @@ input#token {
 	text-align:center;
 	position:relative;
 	top:10px;
-	height:1em;
+	height:2em;
+}
+
+
+textarea.copyhelper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 0;
+	border: 0 none;
+	outline: none;
+	box-shadow: none;
+	overflow: hidden;
+	/* Ensure it has a small width and height. Setting to 1px / 1em doesn't work as this gives a negative w/h on some browsers. */
+	width: 2em;
+	height: 2em;
+	margin: -2em -2em 0 0;
+	background: transparent none repeat scroll 0% 0%; /* Avoid flash of white box if rendered for any reason. */
 }
