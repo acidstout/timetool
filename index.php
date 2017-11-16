@@ -120,7 +120,7 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 	$token = new XORcrypt(array('user' => $username, 'pass' => $password, 'expires' => strtotime($timestamp)), KEY);
 	$token = $token->encrypt();
 	//echo 'Ihr Token lautet <input id="token" type="text" readonly value="' . $token . '" onclick="this.select();"/><br/>';
-	echo '<button type="button" onclick="copyTextToClipboard(\'' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['PHP_SELF'] . '?token=' . $token . '\');">Link mit generierten Token in die Zwischenablage kopieren</button>';
+	echo '<button type="button" onclick="copyTextToClipboard(\'' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?token=' . $token . '\');">Link mit generierten Token in die Zwischenablage kopieren</button>';
 	die();
 }
 
