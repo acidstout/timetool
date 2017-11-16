@@ -120,10 +120,10 @@ class Wrapper {
 		
 		// Check for custom tolerance settings.
 		if (TOLERANCE === true) {
-			if (is_numeric(minTolerance)) {
+			if (is_numeric(MINTOLERANCE)) {
 				$this->minTolerance = MINTOLERANCE;
 			}
-			if (is_numeric(maxTolerance)) {
+			if (is_numeric(MAXTOLERANCE)) {
 				$this->maxTolerance = MAXTOLERANCE;
 			}
 			

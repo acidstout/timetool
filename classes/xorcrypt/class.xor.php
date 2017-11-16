@@ -78,7 +78,8 @@ class XORcrypt {
 			return false;
 		}
 		
-		$json = json_encode($this->_data);
+		// Make sure to have a really clean JSON instead of escaped crap.
+		$json = json_encode($this->_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
 		$this->_data = $this->_xor($json);
 		$this->_data = base64_encode($this->_data);
 		$this->_data = urlencode($this->_data);
