@@ -40,7 +40,27 @@ require_once 'classes/xorcrypt/class.xor.php';
 use TimeTool\Wrapper;
 use XORcrypt\XORcrypt;
 
+
+// Flag which defines the token as expired.
 $expired = false;
+
+
+// Flag which defines the secret key as demo key.
+$demokey = false;
+
+
+// Check if proper secret key has been defined.
+if (!defined('KEY') || KEY == 'secret') {
+	define('KEY', 'secret');
+	$demokey = true;
+}
+
+
+// Check if lifetime of token has been defined.
+if (!defined('LIFETIME')) {
+	define('LIFETIME','now -2 months');
+}
+
 
 // Escape inputs just for the sake of good order.
 // Check for username ...
@@ -79,9 +99,14 @@ if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
 			askForCredentials();
 			die();
 		}
+		
+		if ($demokey) {
+			askForCredentials();
+			die();
+		}
 	}
 } else if (!empty($username) && !empty($password)) {
-	$time = new DateTime('now -2 months');
+	$time = new DateTime(LIFETIME);
 	$timestamp = $time->format('YmdHis');
 	$token = new XORcrypt(array('user' => $username, 'pass' => $password, 'expires' => strtotime($timestamp)), KEY);
 	$token = $token->encrypt();

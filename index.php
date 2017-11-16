@@ -20,6 +20,8 @@
 				</form>
 				<div id="result"><?php
 					global $expired;
+					global $demokey;
+					echo (isset($demokey) && $demokey) ? 'Bitte geheimen Schl&uuml;ssel &auml;ndern!' : null;
 					echo (isset($expired) && $expired) ? 'Ihr Token ist abgelaufen.' : null;
 				?></div>
 			</div>

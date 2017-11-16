@@ -105,7 +105,7 @@ class XORcrypt {
 		for ($i = 0; $i < strlen($input);) {
 			for ($j = 0; ($j < strlen($this->_key) && $i < strlen($input)); $j++, $i++) {
 				$output .= $input{$i} ^ $this->_key{$j};
-				// echo 'i=' . $i . ', ' . 'j=' . $j . ', ' . $output{$i} . '<br />'; // For debugging
+				// error_log('i=' . $i . ', ' . 'j=' . $j . ', ' . $output{$i}, 0);
 			}
 		}
 		
