@@ -91,7 +91,7 @@ if (isset($_REQUEST['pass']) && !empty($_REQUEST['pass'])) {
  * Check token
  */
 if (isset($_REQUEST['token']) && !empty($_REQUEST['token'])) {
-	$token = htmlentities($_REQUEST['token'], ENT_QUOTES);
+	$token = $_REQUEST['token'];
 	$token = new XORcrypt($token, KEY);
 	$credentials = $token->decrypt();
 	
