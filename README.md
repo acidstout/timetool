@@ -19,8 +19,9 @@ Set your defaults in config.php file and then use the following:
 	use TimeTool\Wrapper;
 	$ttw = new Wrapper($username, $password);
 	if ($ttw) {
+		$time = date('H:i');
 		echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
-		$ttw->doTimestamp();
+		$ttw->doTimestamp($time);
 		echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
 	}
 ```

@@ -24,6 +24,15 @@
  *
  *         GET and POST requests are accepted.
  *
+ *		You may also provide a timestamp by specifying the parameter "time"
+ *		with an appropriate value. E.g.:
+ *
+ *				https://localhost/timetool/?time=08%3A00&token=<YOUR_TOKEN>
+ *
+ *		This will set a timestamp for 08:00 o'clock. Keep in mind to escape
+ *		the colon (":" = "%3A").
+ *
+ *
  * @author nrekow
  *
  */
@@ -148,15 +157,20 @@ if ($ttw) {
 	if (isset($result['success']) && $result['success']) {
 		// Post current timestamp to the TimeTool API server.
 		// Arrive and leave action is set automatically by the application on the server.
-		$time = $ttw->doTimestamp();
+		$time = null;
+		if (isset($_REQUEST['time']) && !empty($_REQUEST['time']) && preg_match('/[0-9]\:+/', $_REQUEST['time'])) {
+			$time = $_REQUEST['time'];
+		}
+		
+		$timestamp = $ttw->doTimestamp($time);
 		$result = $ttw->getResult();
 		
 		// Check result. Will be empty on success.
 		if (count($result) == 0) {
-			echo ' Zeitstempel (' . $time . ') gesetzt.';
+			echo ' Zeitstempel (' . $timestamp . ') gesetzt.';
 		} else {
 			echo pre_r($result);
-			echo ' Verwendeter Zeitstempel: ' . $time;
+			echo ' Verwendeter Zeitstempel: ' . $timestamp;
 		}
 	}
 }

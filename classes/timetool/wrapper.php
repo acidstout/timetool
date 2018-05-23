@@ -8,8 +8,9 @@
  * 		$ttw = new Wrapper($username, $password);
  * 
  * 		if ($ttw) {
+ * 			$time = date('H:i');
  *			echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
- * 			$ttw->doTimestamp();
+ * 			$ttw->doTimestamp($time);
  *			echo '<pre>' . print_r($ttw->getResult(), true) . '</pre>';
  * 		}
  * 
@@ -108,18 +109,18 @@ class Wrapper {
 	 * 
 	 * $this->result will contain the server's response (e.g. JSON).
 	 */
-	public function doTimestamp() {
+	public function doTimestamp($time = null) {
 		// Set default timezone.
 		date_default_timezone_set('Europe/Berlin');
 		
 		// Get current time.
-		$time = date('H:i');
+		$timestamp = date('H:i', strtotime($time));
 		
 		// Action as expected by the TimeTool API.
 		$this->action = 'addregi';
 		
 		// Check for custom tolerance settings.
-		if (TOLERANCE === true) {
+		if (TOLERANCE === true && is_null($time)) {
 			if (is_numeric(MINTOLERANCE)) {
 				$this->minTolerance = MINTOLERANCE;
 			}
@@ -129,7 +130,7 @@ class Wrapper {
 			
 			// Only use tolerance if it's greater than zero.
 			if (!empty($this->minTolerance) && !empty($this->maxTolerance)) {
-				$time = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
+				$timestamp = date('H:i', strtotime('-' . rand($this->minTolerance, $this->maxTolerance) . ' minutes'));
 			}
 		}		
 
@@ -144,14 +145,14 @@ class Wrapper {
 				'session' => $this->result['session'],
 				'tc_session' => $this->result['session'],
 				'date' => date('Ymd'),
-				'time' => $time
+				'time' => $timestamp
 		);
 		
 		// Do the actual POST.
 		$this->result = json_decode($this->_doCurlRequest($params), true);
 		
 		// Return the set timestamp to the user.
-		return $time;
+		return $timestamp;
 	}
 	
 	
